@@ -16,17 +16,25 @@ namespace FileIndexer.App.WinForms
         }
 
 
+        private string previousPath;
+
 
         private void btnScan_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
+            folderBrowserDialog.RootFolder = Environment.SpecialFolder.MyComputer;
+            if (!string.IsNullOrEmpty(this.previousPath))
+            {
+                folderBrowserDialog.SelectedPath = this.previousPath;
+            }
             if (DialogResult.OK == folderBrowserDialog.ShowDialog())
             {
                 this.barStatusLabel.Image = global::FileIndexer.App.WinForms.Properties.Resources.settings1_16x16;
                 this.btnScan.Enabled = false;
                 this.btnSave.Enabled = false;
                 this.btnReset.Enabled = false;
-                this._fileIndexEngine = new FileIndexEngine(folderBrowserDialog.SelectedPath);
+//                this.previousPath = folderBrowserDialog.SelectedPath;
+                this._fileIndexEngine = new FileIndexEngine(this.previousPath = folderBrowserDialog.SelectedPath);
                 this._fileIndexEngine.FileIndexUpdate += new FileIndexEngine.FileIndexEvent(_fileIndexEngine_FileIndexUpdate);
                 this._fileIndexEngine.FileIndexCompleted += new FileIndexEngine.FileIndexEvent(_fileIndexEngine_FileIndexCompleted);
                 this._fileIndexEngine.Start();
