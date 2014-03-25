@@ -71,9 +71,12 @@ namespace FileIndexer.App.WinForms
             this._path = path;
         }
 
+        private bool _threadRunning;
+
         public void Start()
         {
             // Reset variables
+            this._threadRunning = true;
             this._numberFilesTotal = 0;
             this._numberFilesScanned = 0;
             this._stringBuilder = new StringBuilder();
@@ -86,6 +89,11 @@ namespace FileIndexer.App.WinForms
             }
 
             this._thread.Start();
+        }
+
+        public void Stop()
+        {
+            this._threadRunning = false;
         }
 
         private void ThreadProcess()
@@ -104,37 +112,40 @@ namespace FileIndexer.App.WinForms
 
         private void Index(string sourceDirectory)
         {
-            DirectoryInfo directoryInfo = new DirectoryInfo(sourceDirectory);
-
-            //Determine whether the source directory exists.
-            if (directoryInfo.Exists)
+            if (this._threadRunning)
             {
-                //Scan files
-                FileInfo[] files = directoryInfo.GetFiles();
-                foreach (FileInfo fileInfo in files)
+                DirectoryInfo directoryInfo = new DirectoryInfo(sourceDirectory);
+
+                //Determine whether the source directory exists.
+                if (directoryInfo.Exists)
                 {
-                    this._numberFilesTotal++;
-                    this._numberFilesScanned++;
-                    this._fileInfoList.Add(fileInfo);
+                    //Scan files
+                    FileInfo[] files = directoryInfo.GetFiles();
+                    foreach (FileInfo fileInfo in files)
+                    {
+                        this._numberFilesTotal++;
+                        this._numberFilesScanned++;
+                        this._fileInfoList.Add(fileInfo);
 
-                    string filePath = fileInfo.FullName.Replace(this._path, "");
-                    filePath = filePath.Replace('\\', '/');
-                    filePath = filePath.Remove(0, 1);
+                        string filePath = fileInfo.FullName.Replace(this._path, "");
+                        filePath = filePath.Replace('\\', '/');
+                        filePath = filePath.Remove(0, 1);
 
-                    this._stringBuilder.Append("<a href=\"");
-                    this._stringBuilder.Append(filePath);
-                    this._stringBuilder.Append("\">");
-                    this._stringBuilder.Append(filePath);
-                    this._stringBuilder.Append("</a><br/>\r\n");
+                        this._stringBuilder.Append("<a href=\"");
+                        this._stringBuilder.Append(filePath);
+                        this._stringBuilder.Append("\">");
+                        this._stringBuilder.Append(filePath);
+                        this._stringBuilder.Append("</a><br/>\r\n");
 
-                    this.OnFileIndexUpdate(this._numberFilesTotal, this._numberFilesScanned);
-                }
+                        this.OnFileIndexUpdate(this._numberFilesTotal, this._numberFilesScanned);
+                    }
 
-                //Scan all sub-directories
-                DirectoryInfo[] directoryInfoList = directoryInfo.GetDirectories();
-                for (int i = 0; i < directoryInfoList.Length; ++i)
-                {
-                    this.Index(directoryInfoList[i].FullName);
+                    //Scan all sub-directories
+                    DirectoryInfo[] directoryInfoList = directoryInfo.GetDirectories();
+                    for (int i = 0; i < directoryInfoList.Length; ++i)
+                    {
+                        this.Index(directoryInfoList[i].FullName);
+                    }
                 }
             }
         }

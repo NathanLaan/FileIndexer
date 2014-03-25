@@ -63,6 +63,44 @@ namespace FileIndexer.App.WinForms.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap indent_16x16 {
+            get {
+                object obj = ResourceManager.GetObject("indent_16x16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Indent Disabled.
+        /// </summary>
+        internal static string IndentDisabled {
+            get {
+                return ResourceManager.GetString("IndentDisabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Indent Enabled.
+        /// </summary>
+        internal static string IndentEnabled {
+            get {
+                return ResourceManager.GetString("IndentEnabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap level_down_16x16 {
+            get {
+                object obj = ResourceManager.GetObject("level_down_16x16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap notepad_16x16 {
             get {
                 object obj = ResourceManager.GetObject("notepad_16x16", resourceCulture);

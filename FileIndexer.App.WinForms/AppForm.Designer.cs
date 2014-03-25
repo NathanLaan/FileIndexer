@@ -47,6 +47,7 @@
             this.btnSave = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.btnReset = new System.Windows.Forms.ToolStripButton();
+            this.btnIndent = new System.Windows.Forms.ToolStripButton();
             this.mnu.SuspendLayout();
             this.barStatusStrip.SuspendLayout();
             this.tsc.ContentPanel.SuspendLayout();
@@ -201,10 +202,11 @@
             this.btnScan,
             this.btnSave,
             this.toolStripSeparator1,
-            this.btnReset});
+            this.btnReset,
+            this.btnIndent});
             this.barToolBar.Location = new System.Drawing.Point(3, 0);
             this.barToolBar.Name = "barToolBar";
-            this.barToolBar.Size = new System.Drawing.Size(232, 25);
+            this.barToolBar.Size = new System.Drawing.Size(333, 25);
             this.barToolBar.TabIndex = 0;
             // 
             // btnScan
@@ -239,6 +241,18 @@
             this.btnReset.Size = new System.Drawing.Size(55, 22);
             this.btnReset.Text = "Reset";
             this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
+            // 
+            // btnIndent
+            // 
+            this.btnIndent.Checked = true;
+            this.btnIndent.CheckOnClick = true;
+            this.btnIndent.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.btnIndent.Image = global::FileIndexer.App.WinForms.Properties.Resources.indent_16x16;
+            this.btnIndent.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnIndent.Name = "btnIndent";
+            this.btnIndent.Size = new System.Drawing.Size(101, 22);
+            this.btnIndent.Text = "###TEMP###";
+            this.btnIndent.Click += new System.EventHandler(this.btnIndent_Click);
             // 
             // AppForm
             // 
@@ -293,6 +307,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton btnReset;
         private System.Windows.Forms.ToolStripStatusLabel barStatusLabel;
+        private System.Windows.Forms.ToolStripButton btnIndent;
     }
 
 }

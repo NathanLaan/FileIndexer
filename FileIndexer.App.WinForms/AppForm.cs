@@ -13,6 +13,7 @@ namespace FileIndexer.App.WinForms
         public AppForm()
         {
             InitializeComponent();
+            this.ToggleIndentButtonDisplay();
         }
 
 
@@ -33,14 +34,11 @@ namespace FileIndexer.App.WinForms
                 this.btnScan.Enabled = false;
                 this.btnSave.Enabled = false;
                 this.btnReset.Enabled = false;
-//                this.previousPath = folderBrowserDialog.SelectedPath;
+                this.btnIndent.Enabled = false;
                 this._fileIndexEngine = new FileIndexEngine(this.previousPath = folderBrowserDialog.SelectedPath);
                 this._fileIndexEngine.FileIndexUpdate += new FileIndexEngine.FileIndexEvent(_fileIndexEngine_FileIndexUpdate);
                 this._fileIndexEngine.FileIndexCompleted += new FileIndexEngine.FileIndexEvent(_fileIndexEngine_FileIndexCompleted);
                 this._fileIndexEngine.Start();
-
-                //fileInfoList = this.Scan(folderBrowserDialog.SelectedPath, fileInfoList);
-                //this.lstFileInfoList.Items.AddRange(fileInfoList.ToArray());
             }
         }
 
@@ -68,11 +66,14 @@ namespace FileIndexer.App.WinForms
             this.btnScan.Enabled = true;
             this.btnSave.Enabled = true;
             this.btnReset.Enabled = true;
+            this.btnIndent.Enabled = true;
 
             this.txtHtmlOutput.Text = this._fileIndexEngine.HtmlOutput;
         }
 
+
         #region Scan
+
         private List<FileInfo> Scan(string sourceDirectory, List<FileInfo> fileInfoList)
         {
             DirectoryInfo source = new DirectoryInfo(sourceDirectory);
@@ -100,7 +101,9 @@ namespace FileIndexer.App.WinForms
             }
             return fileInfoList;
         }
+
         #endregion
+
 
         private void btnSave_Click(object sender, EventArgs e)
         {
@@ -132,12 +135,30 @@ namespace FileIndexer.App.WinForms
             //
             // TODO: Stop Engine
             //
+            this._fileIndexEngine.Stop();
             Application.Exit();
         }
 
         private void mnuFileAbout_Click(object sender, EventArgs e)
         {
             MessageBox.Show(Application.ProductName + " v" + Application.ProductVersion);
+        }
+
+        private void btnIndent_Click(object sender, EventArgs e)
+        {
+            this.ToggleIndentButtonDisplay();
+        }
+
+        private void ToggleIndentButtonDisplay()
+        {
+            if (this.btnIndent.Checked)
+            {
+                this.btnIndent.Text = FileIndexer.App.WinForms.Properties.Resources.IndentEnabled;
+            }
+            else
+            {
+                this.btnIndent.Text = FileIndexer.App.WinForms.Properties.Resources.IndentDisabled;
+            }
         }
 
     }
